@@ -20,7 +20,7 @@ SAMPLES_PER_TRACK = SAMPLE_RATE * DURATION
 
 
 # a function that will process files in a multithreaded way
-def process_file(data, f, n_mfcc=13, n_fft=2048, hop_length=512):
+def process_file(data, f, lock, n_mfcc=13, n_fft=2048, hop_length=512):
     # save the semantic label
     semantic_label = f.parent.name
 
@@ -39,6 +39,9 @@ def process_file(data, f, n_mfcc=13, n_fft=2048, hop_length=512):
         # which is not really convenient)
         mfcc = mfcc.T
 
+        # acquiring a lock to preserve shared resources from being written to until the process is done
+        lock.acquire()
+
         # store mfcc (casting to list because ndarray can't be stored in a json file)
         data["mfcc"].append(mfcc.tolist())
 
@@ -47,6 +50,9 @@ def process_file(data, f, n_mfcc=13, n_fft=2048, hop_length=512):
 
         # saving file name
         data["files"].append(str(f.absolute()))
+
+        # releasing the lock so that other processes can now use shared resources
+        lock.release()
 
 
 def save_mfcc(dataset_path):
@@ -75,8 +81,13 @@ def save_mfcc(dataset_path):
         # saving a list of labels in a dictionary
         data["mapping"] = labels
 
+        # we need the lock inside of process_file function to keep a correct sequence when appending lists (so that
+        # a process working on a differnt file does not append to the list until all the values for the current
+        # file are in place)
+        l = manager.Lock()
+
         with manager.Pool() as pool:
-            pool.starmap(process_file, zip(itertools.repeat(data), all_files))
+            pool.starmap(process_file, zip(itertools.repeat(data), all_files, itertools.repeat(l)))
 
         # performing copy of the data dictionary as well as proxy lists from within the dictionary because otherwise
         # proxy objects (DictProxy and ListProxy) won't be serialized to json and the program will end with an error
