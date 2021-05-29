@@ -2,15 +2,18 @@ from pathlib import Path
 import librosa
 import json
 import time
+from read_config import read_config
 
 
 start_time = time.time()
 
-DATASET_PATH = r"C:\Users\User\speech_commands"
-JSON_PATH = r"C:\Users\User\speech_commands\data.json"
+conf = read_config("config.json")
+
+DATASET_PATH = conf["DATASET_PATH"]
+JSON_PATH = conf["DATA_PATH"]
 
 # number of samples in a second
-SAMPLE_RATE = 22050
+SAMPLE_RATE = conf["SAMPLES_PER_TRACK"]
 # measured in seconds for the current dataset
 DURATION = 1
 # could have just set it to 22050, but let's make it more generic

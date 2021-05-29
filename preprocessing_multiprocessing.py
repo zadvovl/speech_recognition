@@ -4,15 +4,17 @@ import json
 import multiprocessing as mp
 import itertools
 import time
-
+from read_config import read_config
 
 start_time = time.time()
 
-DATASET_PATH = r"C:\Users\User\speech_commands"
-JSON_PATH = r"C:\Users\User\speech_commands\data1.json"
+conf = read_config("config.json")
+
+DATASET_PATH = conf["DATASET_PATH"]
+JSON_PATH = conf["DATA_PATH"]
 
 # number of samples in a second
-SAMPLE_RATE = 22050
+SAMPLE_RATE = conf["SAMPLES_PER_TRACK"]
 # measured in seconds for the current dataset
 DURATION = 1
 # could have just set it to 22050, but let's make it more generic

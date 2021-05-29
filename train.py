@@ -2,10 +2,12 @@ import json
 import numpy as np
 from sklearn.model_selection import train_test_split
 import tensorflow.keras as keras
+from read_config import read_config
 
+conf = read_config("config.json")
 
-DATA_PATH = r"C:\Users\User\speech_commands\data1.json"
-SAVED_MODEL_PATH = r"model.h5"
+DATA_PATH = conf["DATA_PATH"]
+SAVED_MODEL_PATH = conf["SAVED_MODEL_PATH"]
 LEARNING_RATE = 0.0001  # required for minimizing a loss function
 EPOCHS = 40  # how many times the algorithm passes through all the dataset
 BATCH_SIZE = 32 # number of samples for each pass forward pass

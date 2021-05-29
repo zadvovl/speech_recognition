@@ -2,8 +2,11 @@ import tensorflow.keras as keras
 import numpy as np
 import librosa
 from pathlib import Path
+from read_config import read_config
 
-MODEL_PATH = "model.h5"
+conf = read_config("config.json")
+
+SAVED_MODEL_PATH = "model.h5"
 SAMPLES_PER_TRACK = 22050
 
 class _Keyword_Spotting_Service:
@@ -60,7 +63,7 @@ def KeywordSpottingService():
     # ensure that we only have one instance of _Keyword_Spotting_Service
     if _Keyword_Spotting_Service._instance is None:
         _Keyword_Spotting_Service._instance = _Keyword_Spotting_Service()
-        _Keyword_Spotting_Service.model = keras.models.load_model(MODEL_PATH)
+        _Keyword_Spotting_Service.model = keras.models.load_model(SAVED_MODEL_PATH)
 
     return _Keyword_Spotting_Service._instance
 
