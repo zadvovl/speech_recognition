@@ -3,6 +3,6 @@
     "SAVED_MODEL_PATH" : "model.h5",
     "DATASET_PATH" : "../speech_commands",
     "SAMPLES_PER_TRACK" : 22050,
-    "URL" : "http://127.0.0.1:5000/predict",
+    "URL" : "http://127.0.0.1:5050/predict",
     "TEST_AUDIO_FILE_PATH" : "./test/left.wav"
 }

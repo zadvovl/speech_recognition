@@ -10,6 +10,7 @@ numpy = "*"
 librosa = "*"
 sklearn = "*"
 flask = "*"
+uwsgi = "*"
 
 [dev-packages]
 
