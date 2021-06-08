@@ -6,8 +6,8 @@ from read_config import read_config
 
 conf = read_config("config.json")
 
-SAVED_MODEL_PATH = "model.h5"
-SAMPLES_PER_TRACK = 22050
+SAVED_MODEL_PATH = conf["SAVED_MODEL_PATH"]
+SAMPLES_PER_TRACK = conf["SAMPLES_PER_TRACK"]
 
 class _Keyword_Spotting_Service:
     # It will be a singleton (a class that can only have 1 instance in a program).

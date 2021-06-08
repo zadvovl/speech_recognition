@@ -2,9 +2,12 @@ import json
 import numpy as np
 from sklearn.model_selection import train_test_split
 import tensorflow.keras as keras
+
+import sys
+sys.path.insert(1, '/home/vlad/speech_recognition')
 from read_config import read_config
 
-conf = read_config("config.json")
+conf = read_config("../config.json")
 
 DATA_PATH = conf["DATA_PATH"]
 SAVED_MODEL_PATH = conf["SAVED_MODEL_PATH"]

@@ -4,11 +4,14 @@ import json
 import multiprocessing as mp
 import itertools
 import time
+
+import sys
+sys.path.insert(1, '/home/vlad/speech_recognition')
 from read_config import read_config
 
 start_time = time.time()
 
-conf = read_config("config.json")
+conf = read_config("../config.json")
 
 DATASET_PATH = conf["DATASET_PATH"]
 JSON_PATH = conf["DATA_PATH"]
